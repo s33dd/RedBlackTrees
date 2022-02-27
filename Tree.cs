@@ -265,7 +265,7 @@ internal class Tree {
       temp = removableElement;
     }
     else {
-      temp = this.MinimumElement(removableElement);
+      temp = this.MinimumElement(removableElement.rightNode);
     }
     if (temp.leftNode != null) { 
       movedElement = temp.leftNode;
