@@ -18,7 +18,6 @@ namespace RedBlackTree {
       Console.WriteLine(shortInfo);
       Console.WriteLine(gapLine);
     }
-
     public static void ShowTree(Node root, string indent, bool lastInBarnch) {
       Console.Write(indent);
       if (lastInBarnch) {
@@ -52,6 +51,38 @@ namespace RedBlackTree {
           ShowTree(root.children[i], indent, i == root.children.Count - 1);
         }
       }
+    }
+
+    public static bool Ask() {
+      Console.Write("(Y/N)");
+      while ((Console.ReadKey().Key != ConsoleKey.Y) || (Console.ReadKey().Key != ConsoleKey.N)) {
+        Console.Write("(Y/N)");
+      }
+      if (Console.ReadKey().Key == ConsoleKey.Y) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    public static InputType AskType() {
+      InputType? chosenType = null;
+      ConsoleKeyInfo pressedKey;
+      while (chosenType == null) {
+        Console.WriteLine($"{Environment.NewLine}Press 'R' for random input, 'M' for manual input, 'F' for input from file");
+        pressedKey = Console.ReadKey();
+        if (pressedKey.Key == ConsoleKey.R) {
+          chosenType = InputType.Random;
+        }
+        else if (pressedKey.Key == ConsoleKey.M) {
+          chosenType = InputType.Manual;
+        }
+        else if (pressedKey.Key == ConsoleKey.F) {
+          chosenType = InputType.File;
+        }
+      }
+      return (InputType)chosenType;
     }
   }
 }
