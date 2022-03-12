@@ -7,7 +7,8 @@ namespace RedBlackTree {
     Delete = 1,
     Draw = 2,
     Save = 3,
-    Exit = 4
+    Exit = 4,
+    Search = 5
   }
 
   internal static class UI {
@@ -76,6 +77,7 @@ namespace RedBlackTree {
           for (int i = 0; i < root.children.Count; i++) {
             ShowTree(root.children[i], indent, i == root.children.Count - 1);
           }
+          root.children.Clear();
         }
       }
     }
@@ -128,6 +130,7 @@ namespace RedBlackTree {
         Console.WriteLine("Press D to Delete node");
         Console.WriteLine("Press Shift + D to Draw the tree");
         Console.WriteLine("Press S to Save data in file");
+        Console.WriteLine("Press Shift + S to Search in the tree");
         Console.WriteLine("Press E to Exit");
         pressedKey = Console.ReadKey();
         if (pressedKey.Key == ConsoleKey.I) {
@@ -139,8 +142,11 @@ namespace RedBlackTree {
         else if (pressedKey.Modifiers == ConsoleModifiers.Shift & pressedKey.Key == ConsoleKey.D) {
           chosenAction = Action.Draw;
         }
-        else if (pressedKey.Key == ConsoleKey.S) {
+        else if (pressedKey.Key == ConsoleKey.S & pressedKey.Modifiers != ConsoleModifiers.Shift) {
           chosenAction = Action.Save;
+        }
+        else if (pressedKey.Modifiers == ConsoleModifiers.Shift & pressedKey.Key == ConsoleKey.S) {
+          chosenAction = Action.Search;
         }
         else if (pressedKey.Key == ConsoleKey.E) {
           chosenAction = Action.Exit;
@@ -150,9 +156,22 @@ namespace RedBlackTree {
     }
 
     public static void DeleteNode(Tree tree) {
-      Console.WriteLine("Which node do you want to delete?");
+      Console.WriteLine($"{Environment.NewLine}Which node do you want to delete?");
       int removedNode = Input.GetInt();
       tree.Deletion(removedNode);
+    }
+
+    public static void SearchNode(Tree tree) {
+      Console.Write(Environment.NewLine);
+      Console.WriteLine("Which node do you want to find?");
+      int desiredNode = Input.GetInt();
+      Node node = tree.Search(desiredNode);
+      if (node != null) {
+        Console.WriteLine($"{Environment.NewLine}{desiredNode} is in your tree!");
+      }
+      else {
+        Console.WriteLine($"{Environment.NewLine}{desiredNode} is not in your tree. Why not add it in?");
+      }
     }
   }
 }

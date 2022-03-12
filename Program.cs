@@ -8,10 +8,13 @@ namespace RedBlackTree {
       while(true) {
         Action action = UI.AskAction();
         if (action == Action.Input) {
-          Input.InputNodes(usersTree);
+          usersTree = Input.InputNodes(usersTree);
         }
         else if (action == Action.Delete) {
-          UI.DeleteNode(usersTree);
+          if (usersTree != null) { 
+            UI.DeleteNode(usersTree);
+          }
+          else Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}You haven`t created a tree yet! Plant one! :)");
         }
         else if (action == Action.Draw) {
           Console.WriteLine(Environment.NewLine);
@@ -24,6 +27,12 @@ namespace RedBlackTree {
         }
         else if (action == Action.Save) {
           //Saving to file is not completed yet
+        }
+        else if (action == Action.Search) {
+          if (usersTree != null) {
+            UI.SearchNode(usersTree);
+          }
+          else Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}You haven`t created a tree yet! Plant one! :)");
         }
         else if (action == Action.Exit) {
           Console.Write(Environment.NewLine);

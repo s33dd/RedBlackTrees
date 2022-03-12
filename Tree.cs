@@ -256,7 +256,6 @@ internal class Tree {
       Console.WriteLine($"There is no {value} in this tree {Environment.NewLine}");
       return;
     }
-
     Node temp = removableElement;
     NodeType trueColor = temp.color;
     Node movedElement = null;
