@@ -41,10 +41,10 @@ internal class Tree {
     Node tempRoot = this.root;
     Node desired = null;
     while (!found) {
-      if (value < tempRoot.number) {
+      if (value < tempRoot.number & tempRoot.leftNode != null) {
         tempRoot = tempRoot.leftNode;
       }
-      if (value > tempRoot.number) {
+      if (value > tempRoot.number & tempRoot.rightNode != null) {
         tempRoot = tempRoot.rightNode;
       }
       if (value == tempRoot.number) {
@@ -54,6 +54,7 @@ internal class Tree {
       if (tempRoot == null) {
         break;
       }
+      else break;
     }
     if (found) {
       return desired;
@@ -253,7 +254,7 @@ internal class Tree {
   public void Deletion(int value) {
     Node removableElement = this.Search(value);
     if (removableElement == null) {
-      Console.WriteLine($"There is no {value} in this tree {Environment.NewLine}");
+      Console.WriteLine($"{Environment.NewLine}There is no {value} in this tree");
       return;
     }
     Node temp = removableElement;
