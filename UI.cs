@@ -1,6 +1,15 @@
 ﻿using System;
 
 namespace RedBlackTree {
+
+  enum Action {
+    Input = 0,
+    Delete = 1,
+    Draw = 2,
+    Save = 3,
+    Exit = 4
+  }
+
   internal static class UI {
     public static string greetings = $"The first lab {Environment.NewLine}Made by: Student of 403th group Sukhoverikov Denis";
     public static string shortInfo = $"Var 6 {Environment.NewLine}Realisation of a Red-Black trees on C#";
@@ -19,51 +28,76 @@ namespace RedBlackTree {
       Console.WriteLine(gapLine);
     }
     public static void ShowTree(Node root, string indent, bool lastInBarnch) {
-      Console.Write(indent);
-      if (lastInBarnch) {
-        Console.Write($"│{Environment.NewLine}{indent}└─");
-        indent += "  ";
+      if (root == null) {
+        Console.WriteLine("While your tree is empty this is the only tree I can show to you:");
+        Console.WriteLine("    .{{}}}}}}.");
+        Console.WriteLine("   {{{{{{(`)}}}.");
+        Console.WriteLine("  {{{(`)}}}}}}}}}");
+        Console.WriteLine(" }}}}}}}}}{{(`){{{");
+        Console.WriteLine(" }}}}{{{{(`)}}{{{{");
+        Console.WriteLine(" {{{(`)}}}}}}}{}}}}}");
+        Console.WriteLine("{{{{{{{{(`)}}}}}}}}}}");
+        Console.WriteLine("{{{{{{{}{{{{(`)}}}}}}");
+        Console.WriteLine("{{{{{(`)   {{{{(`)}'");
+        Console.WriteLine(" `---- |   | ----`");
+        Console.WriteLine(@" (`)  /     \");
+        Console.WriteLine("~~~~~~~~~~~~~~~~~~~");
+
       }
       else {
-        Console.Write($"│{Environment.NewLine}{indent}├─");
-        indent += "│ ";
-      }
-      if (root != null) {
-        if (root.color == NodeType.Black) {
-          Console.BackgroundColor = ConsoleColor.Black;
-          Console.ForegroundColor = ConsoleColor.White;
+        Console.Write(indent);
+        if (lastInBarnch) {
+          Console.Write($"│{Environment.NewLine}{indent}└─");
+          indent += "  ";
         }
         else {
-          Console.BackgroundColor = ConsoleColor.Red;
-          Console.ForegroundColor = ConsoleColor.Green;
+          Console.Write($"│{Environment.NewLine}{indent}├─");
+          indent += "│ ";
         }
-        Console.WriteLine($" {root.number} ");
-        ConsoleDefault();
+        if (root != null) {
+          if (root.color == NodeType.Black) {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+          }
+          else {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Green;
+          }
+          Console.WriteLine($" {root.number} ");
+          ConsoleDefault();
 
-        if (root.rightNode != null) {
-          root.children.Add(root.rightNode);
-        }
-        if (root.leftNode != null) {
-          root.children.Add(root.leftNode);
-        }
+          if (root.rightNode != null) {
+            root.children.Add(root.rightNode);
+          }
+          if (root.leftNode != null) {
+            root.children.Add(root.leftNode);
+          }
 
-        for (int i = 0; i < root.children.Count; i++) {
-          ShowTree(root.children[i], indent, i == root.children.Count - 1);
+          for (int i = 0; i < root.children.Count; i++) {
+            ShowTree(root.children[i], indent, i == root.children.Count - 1);
+          }
         }
       }
     }
 
     public static bool Ask() {
-      Console.Write("(Y/N)");
-      while ((Console.ReadKey().Key != ConsoleKey.Y) || (Console.ReadKey().Key != ConsoleKey.N)) {
+      bool choiseIsMade = false;
+      bool choise = false;
+      ConsoleKeyInfo pressedKey;
+      while (!choiseIsMade) {
+        Console.Write(Environment.NewLine);
         Console.Write("(Y/N)");
+        pressedKey = Console.ReadKey();
+        if (pressedKey.Key == ConsoleKey.Y) {
+          choise = true;
+          choiseIsMade = true;
+        }
+        else if (pressedKey.Key == ConsoleKey.N) {
+          choise = false;
+          choiseIsMade = true;
+        }
       }
-      if (Console.ReadKey().Key == ConsoleKey.Y) {
-        return true;
-      }
-      else {
-        return false;
-      }
+      return choise;
     }
 
     public static InputType AskType() {
@@ -83,6 +117,42 @@ namespace RedBlackTree {
         }
       }
       return (InputType)chosenType;
+    }
+
+    public static Action AskAction() {
+      Action? chosenAction = null;
+      ConsoleKeyInfo pressedKey;
+      while (chosenAction == null) {
+        Console.WriteLine($"{Environment.NewLine}What do you want to do?");
+        Console.WriteLine("Press I to Input node");
+        Console.WriteLine("Press D to Delete node");
+        Console.WriteLine("Press Shift + D to Draw the tree");
+        Console.WriteLine("Press S to Save data in file");
+        Console.WriteLine("Press E to Exit");
+        pressedKey = Console.ReadKey();
+        if (pressedKey.Key == ConsoleKey.I) {
+          chosenAction = Action.Input;
+        }
+        else if (pressedKey.Key == ConsoleKey.D & pressedKey.Modifiers != ConsoleModifiers.Shift) {
+          chosenAction = Action.Delete;
+        }
+        else if (pressedKey.Modifiers == ConsoleModifiers.Shift & pressedKey.Key == ConsoleKey.D) {
+          chosenAction = Action.Draw;
+        }
+        else if (pressedKey.Key == ConsoleKey.S) {
+          chosenAction = Action.Save;
+        }
+        else if (pressedKey.Key == ConsoleKey.E) {
+          chosenAction = Action.Exit;
+        }
+      }
+      return (Action)chosenAction;
+    }
+
+    public static void DeleteNode(Tree tree) {
+      Console.WriteLine("Which node do you want to delete?");
+      int removedNode = Input.GetInt();
+      tree.Deletion(removedNode);
     }
   }
 }
