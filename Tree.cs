@@ -41,20 +41,19 @@ internal class Tree {
     Node tempRoot = this.root;
     Node desired = null;
     while (!found) {
-      if (value < tempRoot.number & tempRoot.leftNode != null) {
+      if (tempRoot != null && value < tempRoot.number) {
         tempRoot = tempRoot.leftNode;
       }
-      if (value > tempRoot.number & tempRoot.rightNode != null) {
+      if (tempRoot != null && value > tempRoot.number) {
         tempRoot = tempRoot.rightNode;
       }
-      if (value == tempRoot.number) {
+      if (tempRoot != null && value == tempRoot.number) {
         found = true;
         desired = tempRoot;
       }
       if (tempRoot == null) {
         break;
       }
-      else break;
     }
     if (found) {
       return desired;
