@@ -56,13 +56,43 @@ namespace RedBlackTree {
       return tree;
     }
 
+    public static Tree RandomInput(Tree tree) {
+      Console.WriteLine($"{Environment.NewLine}How many elements do you want to input?");
+      int nodesQuantity = GetInt();
+      while (nodesQuantity < 1) {
+        Console.WriteLine("Quantity can't be less than one!");
+        nodesQuantity = GetInt();
+      }
+      Console.WriteLine("Set the lower border of randomizer:");
+      int lowerBorder = Input.GetInt();
+      Console.WriteLine($"{Environment.NewLine}Set the higher border of randomizer:");
+      int higherBorder = Input.GetInt();
+      Random randomizer = new Random();
+      if (tree == null) {
+        int root = randomizer.Next(lowerBorder, higherBorder);
+        tree = new Tree(root);
+        nodesQuantity--;
+        for (int i = nodesQuantity; i > 0; i--) {
+          int node = randomizer.Next(lowerBorder, higherBorder);
+          tree.Insertion(node);
+        }
+      }
+      else {
+        for (int i = nodesQuantity; i > 0; i--) {
+          int node = randomizer.Next(lowerBorder, higherBorder);
+          tree.Insertion(node);
+        }
+      }
+      return tree;
+    }
+
     public static Tree InputNodes(Tree tree) {
       InputType mode = UI.AskType();
       if (mode == InputType.Manual) {
         tree = ManualInput(tree);
       }
       else if (mode == InputType.Random) {
-        //Is not completed yet
+        tree = RandomInput(tree);
       }
       else {
         //File input is not completed yet
