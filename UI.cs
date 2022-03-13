@@ -126,7 +126,7 @@ namespace RedBlackTree {
       ConsoleKeyInfo pressedKey;
       while (chosenAction == null) {
         Console.WriteLine($"{Environment.NewLine}What do you want to do?");
-        Console.WriteLine("Press I to Input node");
+        Console.WriteLine("Press I to Input nodes");
         Console.WriteLine("Press D to Delete node");
         Console.WriteLine("Press Shift + D to Draw the tree");
         Console.WriteLine("Press S to Save data in file");

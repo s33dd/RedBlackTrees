@@ -26,7 +26,18 @@ namespace RedBlackTree {
           }
         }
         else if (action == Action.Save) {
-          //Saving to file is not completed yet
+          if (usersTree == null) {
+            Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}Nothing to save!");
+          }
+          else {
+            Console.WriteLine($"{Environment.NewLine}Print path to file:");
+            string path = Console.ReadLine();
+            while (!FileWork.AllowedName(path)) {
+              Console.WriteLine($"{Environment.NewLine}Please, enter correct path:");
+              path = Console.ReadLine();
+            }
+            FileWork.SaveToFile(path, usersTree);
+          }
         }
         else if (action == Action.Search) {
           if (usersTree != null) {
@@ -36,7 +47,7 @@ namespace RedBlackTree {
         }
         else if (action == Action.Exit) {
           Console.Write(Environment.NewLine);
-          Console.WriteLine("Do you really want to close  the program?");
+          Console.WriteLine("Do you really want to close the program?");
           bool isExit = UI.Ask();
           if (isExit) {
             Environment.Exit(0);
