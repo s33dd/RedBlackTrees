@@ -67,6 +67,11 @@ namespace RedBlackTree {
       int lowerBorder = Input.GetInt();
       Console.WriteLine($"{Environment.NewLine}Set the higher border of randomizer:");
       int higherBorder = Input.GetInt();
+      while (higherBorder < lowerBorder) {
+        Console.WriteLine($"{Environment.NewLine}Higher border can`t be less than lower border!");
+        Console.WriteLine($"{Environment.NewLine}Set the higher border of randomizer:");
+        higherBorder = Input.GetInt();
+      }
       Random randomizer = new Random();
       if (tree == null) {
         int root = randomizer.Next(lowerBorder, higherBorder);
