@@ -100,7 +100,10 @@ namespace RedBlackTree {
         tree = RandomInput(tree);
       }
       else {
-        //File input is not completed yet
+        Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}!!!Please pay attention that data in file need to be in strict format: Each number on separate string!!!");
+        Console.WriteLine($"{Environment.NewLine}Print path to file:");
+        string path = Console.ReadLine();
+        tree = FileWork.ReadFromFile(path, tree);
       }
       return tree;
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace RedBlackTree {
@@ -76,6 +77,42 @@ namespace RedBlackTree {
       }
       Node root = tree.GetRoot();
       FileNodesPrint(root, file);
+    }
+
+   public static Tree ReadFromFile(string name, Tree tree) {
+      FileInfo file = new FileInfo(name);
+      List<int> nodes = new List<int>();
+      bool isShowed = false;
+      while (!file.Exists) {
+        Console.WriteLine($"{Environment.NewLine}This file doesn`t exist!");
+        Console.WriteLine($"{Environment.NewLine}Print path to another file:");
+        name = Console.ReadLine();
+        file = new FileInfo(name);
+      }
+      using (StreamReader reader = file.OpenText()) {
+        string line = "";
+        while((line = reader.ReadLine()) != null) {
+          try {
+            int node = Int32.Parse(line);
+            nodes.Add(node);
+          }
+          catch {
+            if(!isShowed) {
+              Console.WriteLine($"{Environment.NewLine}There was some problems. I`ve read all that I could.");
+              isShowed = true;
+            }
+          }
+        }
+      }
+      foreach (int node in nodes) {
+        if (tree == null) {
+          tree = new Tree(node);
+        }
+        else {
+          tree.Insertion(node);
+        }
+      }
+      return tree;
     }
   }
 }
