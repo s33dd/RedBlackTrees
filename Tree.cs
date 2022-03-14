@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-enum NodeType {
+public enum NodeType {
   Black = 0,
   Red = 1
 }
 
-internal class Node {
+public class Node {
   public Node leftNode;
   public Node rightNode;
   public Node parent;
@@ -23,7 +23,7 @@ internal class Node {
   }
 
 }
-internal class Tree {
+public class Tree {
   protected Node root;
 
   public Node GetRoot() {
@@ -274,6 +274,7 @@ internal class Tree {
     }
     if (temp == this.root) {
       this.root = movedElement;
+      this.LeftRotate(root.rightNode);
     }
     else if (temp == temp.parent.leftNode) {
       temp.parent.leftNode = movedElement;
